@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Signal Vault &middot; Sign in{% endblock %}
+{% block content %}
+<h1>Operator sign-in</h1>
+<p class="lede">Credentials are checked against the relay operator roster.</p>
+
+{% if error %}
+  <div class="panel alert">{{ error }}</div>
+{% endif %}
+
+<div class="panel" style="max-width: 420px">
+  <form method="post" action="/login" autocomplete="off">
+    <label for="username">Operator</label>
+    <input id="username" name="username" maxlength="128" required>
+    <label for="password">Passphrase</label>
+    <input id="password" name="password" type="password" maxlength="128" required>
+    <button type="submit">Authenticate</button>
+  </form>
+</div>
+
+<p class="muted">Open-house analyst account: <strong>guest</strong> / <strong>guest</strong></p>
+{% endblock %}

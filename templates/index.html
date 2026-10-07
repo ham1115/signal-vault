@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Signal Vault &middot; Overview{% endblock %}
+{% block content %}
+<h1>Relay intercept console</h1>
+<p class="lede">
+  Signal Vault aggregates unattributed radio intercepts from the Kilo, Juliet, Foxtrot
+  and Echo relays. Analyst accounts may read records classified OPEN. Records
+  classified VAULT render only for operators holding the VAULT clearance.
+</p>
+
+<div class="row">
+  <div class="panel">
+    <h2 style="margin-top:0">Status</h2>
+    <p class="muted">Relays online: 4 / 4<br>Ingest build: {{ version }}<br>Session tokens: HS256, 1 h TTL</p>
+  </div>
+  <div class="panel">
+    <h2 style="margin-top:0">Demo access</h2>
+    <p class="muted">
+      A read-only analyst account is published for the open house:<br>
+      <strong>guest</strong> / <strong>guest</strong>
+    </p>
+    <p><a href="/login">Sign in &rarr;</a></p>
+  </div>
+</div>
+
+<h2>Scope</h2>
+<p class="lede">
+  This host is in scope for the exercise. Out of scope: the laptop running it, the
+  event network, the scoreboard, and other players' sessions. Denial-of-service
+  attempts are not a solution path and will not be scored.
+</p>
+{% endblock %}

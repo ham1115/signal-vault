@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Signal Vault{% endblock %}</title>
+<style>
+  :root {
+    --bg: #070b10;
+    --panel: #0e1620;
+    --panel-2: #121d29;
+    --line: #1f3040;
+    --ink: #d7e3ee;
+    --muted: #7d94a8;
+    --accent: #3fd0a0;
+    --warn: #e8a33d;
+    --danger: #e4635a;
+    --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.6 var(--mono);
+    background-image:
+      linear-gradient(transparent 95%, rgba(63, 208, 160, .05) 95%),
+      linear-gradient(90deg, transparent 95%, rgba(63, 208, 160, .05) 95%);
+    background-size: 28px 28px;
+  }
+  header {
+    border-bottom: 1px solid var(--line);
+    background: rgba(7, 11, 16, .9);
+    padding: 14px 24px;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  header .brand { color: var(--accent); font-weight: 700; letter-spacing: .14em; }
+  header .build { color: var(--muted); font-size: 12px; }
+  header nav { margin-left: auto; display: flex; gap: 14px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  main { max-width: 980px; margin: 0 auto; padding: 32px 24px 64px; }
+  h1 { font-size: 22px; letter-spacing: .06em; margin: 0 0 6px; }
+  h2 { font-size: 15px; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; margin: 32px 0 12px; }
+  p { color: var(--ink); }
+  .lede { color: var(--muted); max-width: 68ch; }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 18px 20px;
+    margin: 14px 0;
+  }
+  .row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .row > .panel { flex: 1 1 280px; }
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: .1em;
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    color: var(--muted);
+  }
+  .tag.open { color: var(--accent); border-color: rgba(63, 208, 160, .4); }
+  .tag.vault { color: var(--warn); border-color: rgba(232, 163, 61, .4); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 400; letter-spacing: .1em; font-size: 11px; text-transform: uppercase; }
+  pre {
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 14px;
+    overflow-x: auto;
+    font-size: 12.5px;
+    color: var(--ink);
+  }
+  label { display: block; font-size: 12px; color: var(--muted); letter-spacing: .08em; margin: 14px 0 6px; }
+  input {
+    width: 100%;
+    padding: 10px 12px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    color: var(--ink);
+    font: inherit;
+  }
+  input:focus { outline: 1px solid var(--accent); }
+  button {
+    margin-top: 20px;
+    padding: 10px 18px;
+    background: var(--accent);
+    color: #04140e;
+    border: 0;
+    border-radius: 4px;
+    font: inherit;
+    font-weight: 700;
+    letter-spacing: .08em;
+    cursor: pointer;
+  }
+  .flag {
+    font-size: 17px;
+    color: var(--accent);
+    background: #04140e;
+    border: 1px solid rgba(63, 208, 160, .45);
+    padding: 16px;
+    border-radius: 4px;
+    word-break: break-all;
+  }
+  .alert { border-color: rgba(228, 99, 90, .5); color: var(--danger); }
+  .muted { color: var(--muted); }
+  footer { color: var(--muted); font-size: 12px; padding: 0 24px 40px; max-width: 980px; margin: 0 auto; }
+</style>
+</head>
+<body>
+<header>
+  <span class="brand">SIGNAL&nbsp;VAULT</span>
+  <span class="build">relay console &middot; build {{ version }}</span>
+  <nav>
+    <a href="/">overview</a>
+    {% if claims %}
+      <a href="/console">console</a>
+      <a href="/vault">vault</a>
+      <a href="/logout">sign out</a>
+    {% else %}
+      <a href="/login">sign in</a>
+    {% endif %}
+  </nav>
+</header>
+<main>
+{% block content %}{% endblock %}
+</main>
+<footer>
+  Signal Vault is a training artifact. All relays, call signs and records are fictional.
+</footer>
+</body>
+</html>

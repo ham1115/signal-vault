@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Signal Vault &middot; Console{% endblock %}
+{% block content %}
+<h1>Intercept feed</h1>
+<p class="lede">
+  Signed in as <strong>{{ claims.display or claims.sub }}</strong>
+  &mdash; role <span class="tag">{{ claims.role }}</span>
+  clearance <span class="tag">{{ claims.clearance }}</span>
+</p>
+
+<h2>Readable records</h2>
+<div class="panel" style="padding: 4px 12px">
+  <table>
+    <thead>
+      <tr><th>Record</th><th>Band</th><th>Origin</th><th>Class</th><th>Summary</th></tr>
+    </thead>
+    <tbody>
+      {% for item in visible %}
+        <tr>
+          <td>{{ item.id }}</td>
+          <td>{{ item.band }}</td>
+          <td>{{ item.origin }}</td>
+          <td><span class="tag open">{{ item.classification }}</span></td>
+          <td>{{ item.summary }}</td>
+        </tr>
+      {% endfor %}
+      {% for item in withheld %}
+        <tr>
+          <td>{{ item.id }}</td>
+          <td>{{ item.band }}</td>
+          <td>{{ item.origin }}</td>
+          <td><span class="tag vault">{{ item.classification }}</span></td>
+          <td class="muted">{{ item.summary }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<h2>Your session token</h2>
+<p class="lede">
+  The console decodes your own token for troubleshooting. Tokens are issued as
+  HS256 JWTs; the signing key is selected by the <code>kid</code> header so that
+  the ingest workers and the console can rotate independently.
+</p>
+<pre>{{ claims_json }}</pre>
+
+<!--
+  TODO(r.mendoza): ops asked for a diagnostics export during the migration and it
+  is still wired up at /internal/support-bundle. Pull the route before the
+  external audit (ticket SV-901) -- it prints the whole key inventory.
+-->
+
+<h2>Restricted</h2>
+<p class="lede">
+  <a href="/vault">Vault records</a> require role <code>admin</code>.
+</p>
+{% endblock %}

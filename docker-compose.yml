@@ -1,0 +1,70 @@
+name: signal-vault
+
+services:
+  signal-vault:
+    build: .
+    image: signal-vault:1.0
+    container_name: signal-vault
+
+    # Bind on every interface so players on the event Wi-Fi can reach it.
+    # Change the left-hand port if 8080 is taken on the laptop.
+    ports:
+      - "0.0.0.0:8080:8080"
+
+    environment:
+      # Option A (preferred): set the flag here, or in a .env file next to this
+      # compose file as CTF_FLAG=CTF{...}. Leave empty to use ./flag.txt.
+      CTF_FLAG: "${CTF_FLAG:-}"
+      # Leave CTF_LEGACY_KEY unset unless you want to change the intended
+      # solution key. CTF_MAIN_KEY is deliberately unset: the app generates a
+      # random active key at every boot, so it cannot be cracked or reused.
+
+    volumes:
+      # Option B: flag on disk, mounted read-only. The app reads it once at
+      # boot into memory, so even deleting the host file mid-event is harmless.
+      - ./flag.txt:/flag.txt:ro
+
+    # --- Containment -------------------------------------------------------
+    read_only: true              # no writes anywhere on the root filesystem
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=8m
+      - /dev/shm:rw,noexec,nosuid,nodev,size=16m
+    user: "10001:10001"          # non-root, matches the image's vault account
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 128
+
+    # --- Laptop-friendly resource caps -------------------------------------
+    # Compose v2 honours deploy.resources.limits outside Swarm.
+    deploy:
+      resources:
+        limits:
+          cpus: "1.00"
+          memory: 256M
+        reservations:
+          memory: 64M
+    # Mirrored for older compose binaries that ignore the deploy block.
+    cpus: 1.00
+    mem_limit: 256m
+    memswap_limit: 256m
+
+    restart: unless-stopped
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "2"
+
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request,sys; sys.exit(0) if urllib.request.urlopen('http://127.0.0.1:8080/healthz', timeout=2).status == 200 else sys.exit(1)"
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s

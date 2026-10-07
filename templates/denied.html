@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Signal Vault &middot; Denied{% endblock %}
+{% block content %}
+<h1>Clearance insufficient</h1>
+<div class="panel alert">
+  Token presented role <strong>{{ claims.role }}</strong>. Vault records require
+  role <strong>admin</strong>.
+</div>
+<p class="lede">
+  The verifier accepted your token's signature, so the session itself is valid.
+  Only the role claim failed the check.
+</p>
+<p><a href="/console">&larr; Back to console</a></p>
+{% endblock %}

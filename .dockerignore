@@ -1,0 +1,10 @@
+.env
+.git
+__pycache__
+*.pyc
+solve.py
+tests/
+README.md
+BRIEFING.md
+SOLUTION.md
+flag.txt

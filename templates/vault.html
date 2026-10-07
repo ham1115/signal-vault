@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Signal Vault &middot; Vault{% endblock %}
+{% block content %}
+<h1>Vault record {{ record.id }}</h1>
+<p class="lede">
+  Decrypted for <strong>{{ claims.sub }}</strong> &mdash; role
+  <span class="tag vault">{{ claims.role }}</span>
+</p>
+
+<div class="panel">
+  <table>
+    <tr><th>Band</th><td>{{ record.band }}</td></tr>
+    <tr><th>Origin</th><td>{{ record.origin }}</td></tr>
+    <tr><th>Classification</th><td>{{ record.classification }}</td></tr>
+  </table>
+</div>
+
+<h2>Decryption key material</h2>
+<p class="flag">{{ flag }}</p>
+<p class="muted">Submit this string to the scoreboard.</p>
+{% endblock %}
