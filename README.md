@@ -1,5 +1,9 @@
 # Signal Vault — Web Exploitation CTF (intermediate)
 
+> **New to Docker?** Follow [RUNNING.md](RUNNING.md) instead — a step-by-step
+> guide for **macOS, Windows and Linux**, from installing Docker to
+> resetting between rounds.
+
 Self-contained Flask challenge for a LAN-hosted event. No internet, no CDNs, no
 database engine, no writable state. Vulnerability class: **JWT manipulation**
 (key-identifier confusion against a retained, leaked legacy signing key).

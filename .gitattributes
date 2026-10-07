@@ -1,0 +1,9 @@
+# Keep LF endings everywhere. Without this, a clone on Windows gets CRLF, and
+# CRLF in the Dockerfile or in files the Linux container reads causes
+# hard-to-diagnose failures.
+* text=auto eol=lf
+
+# Binary-safe (none at present, but keeps future additions honest).
+*.png binary
+*.jpg binary
+*.gz  binary
